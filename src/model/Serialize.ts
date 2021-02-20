@@ -61,6 +61,11 @@ function value(v: any): any {
   if (isArray(v)) {
     return array(v)
   }
+  
+  if (Object.prototype.toString.call(v) === '[object Date]') {
+    v = isFinite(v) ? new Date(v.getTime()) : null;
+    return v;
+  }
 
   if (typeof v === 'object') {
     return object(v)

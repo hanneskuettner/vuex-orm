@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash.clonedeep';
+
 export interface Dictionary<T> {
   [key: string]: T
 }
@@ -243,33 +245,6 @@ export function groupBy(
   }, {} as any)
 }
 
-/**
- * Deep clone the given target object.
- */
-export function cloneDeep<T extends object>(target: T): T {
-  if (target === null) {
-    return target
-  }
-
-  if (isArray(target)) {
-    const cp = [] as any[]
-    ;(target as any[]).forEach((v) => cp.push(v))
-
-    return cp.map((n: any) => cloneDeep<any>(n)) as any
-  }
-
-  if (typeof target === 'object' && target !== {}) {
-    const cp = { ...(target as { [key: string]: any }) } as {
-      [key: string]: any
-    }
-
-    Object.keys(cp).forEach((k) => (cp[k] = cloneDeep<any>(cp[k])))
-
-    return cp as T
-  }
-
-  return target
-}
 
 export default {
   isArray,
